@@ -2,7 +2,7 @@ name: Build APK
 
    on:
      push:
-       branches: [ main ]  # 确保分支名与原仓库一致（可能是 master）
+       branches: [ master ]  # 确保分支名与原仓库一致（可能是 master）
 
    jobs:
      build:
