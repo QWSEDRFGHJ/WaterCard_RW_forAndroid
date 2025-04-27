@@ -1,34 +1,35 @@
 name: Build APK
 
-   on:
-     push:
-       branches: [ master ]  # 确保分支名与原仓库一致（可能是 master）
+on:  # 第3行：确保此处无多余缩进或符号
+  push:
+    branches:  # 使用连字符列表格式（避免方括号简写可能引发的解析问题）
+      - master    # 分支名称需与原仓库一致（如 main 或 master）
 
-   jobs:
-     build:
-       runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-       steps:
-         - name: Checkout code
-           uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-         - name: Set up JDK
-           uses: actions/setup-java@v3
-           with:
-             distribution: 'zulu'
-             java-version: 11
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: 11
 
-         - name: Setup Android SDK
-           uses: android-actions/setup-android@v2
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
 
-         - name: Grant Gradle Permission
-           run: chmod +x gradlew  # 确保可执行权限
+      - name: Grant Gradle Permission
+        run: chmod +x gradlew  # 解决权限问题
 
-         - name: Build Debug APK
-           run: ./gradlew assembleDebug
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
 
-         - name: Upload APK
-           uses: actions/upload-artifact@v3
-           with:
-             name: app-debug
-             path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
